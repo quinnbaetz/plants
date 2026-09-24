@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fall Garden Plan</title>
+<style>
+  :root {
+    --bg: #faf8f4;
+    --card: #ffffff;
+    --ink: #2d3320;
+    --muted: #6b7059;
+    --accent: #4a7c2f;
+    --accent-soft: #e8f0df;
+    --border: #e0ddd2;
+    --bed1: #dcebc8;
+    --bed2: #f3e6c8;
+    --bed3: #d8e8e4;
+    --warn-bg: #fdf3e0;
+    --warn-border: #e8c98a;
+    --soil: #8a6b4d;
+    --wood: #b98b5e;
+    --wood2: #8f6a44;
+    --frame-ink: #4a3620;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c1e17;
+      --card: #262a1f;
+      --ink: #e6e8dc;
+      --muted: #a3a894;
+      --accent: #8fbf62;
+      --accent-soft: #34402a;
+      --border: #3a3f30;
+      --bed1: #37452a;
+      --bed2: #4a4028;
+      --bed3: #2c4340;
+      --warn-bg: #3d3524;
+      --warn-border: #6e5c33;
+      --soil: #4a3a29;
+      --wood: #6b5238;
+      --wood2: #4e3c28;
+      --frame-ink: #d8c9b0;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c1e17;
+    --card: #262a1f;
+    --ink: #e6e8dc;
+    --muted: #a3a894;
+    --accent: #8fbf62;
+    --accent-soft: #34402a;
+    --border: #3a3f30;
+    --bed1: #37452a;
+    --bed2: #4a4028;
+    --bed3: #2c4340;
+    --warn-bg: #3d3524;
+    --warn-border: #6e5c33;
+    --soil: #4a3a29;
+    --wood: #6b5238;
+    --wood2: #4e3c28;
+    --frame-ink: #d8c9b0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.55 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    padding: 32px 16px 64px;
+  }
+  main { max-width: 860px; margin: 0 auto; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 28px; }
+  h2 { font-size: 1.25rem; margin: 36px 0 12px; border-bottom: 2px solid var(--accent); padding-bottom: 6px; }
+  h3 { font-size: 1.05rem; margin: 18px 0 8px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+  }
+  .bedviz svg { width: 100%; height: auto; display: block; margin: 12px 0 4px; }
+  .tabs { display: flex; gap: 8px; margin: 0 0 24px; border-bottom: 2px solid var(--border); }
+  .tabs button {
+    background: none; border: none; cursor: pointer;
+    font: inherit; font-weight: 700; color: var(--muted);
+    padding: 10px 14px; margin-bottom: -2px;
+    border-bottom: 3px solid transparent;
+  }
+  .tabs button.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tabpane { display: none; }
+  .tabpane.active { display: block; }
+  .cap { color: var(--muted); font-size: 0.8rem; margin: 0 0 4px; }
+  ul { margin: 8px 0; padding-left: 22px; }
+  li { margin: 4px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.03em; }
+  .tag {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 4px;
+    padding: 1px 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .badge {
+    display: inline-block;
+    border-radius: 4px;
+    padding: 0 7px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    margin-right: 6px;
+    vertical-align: 1px;
+  }
+  .badge.start { background: var(--accent); color: var(--card); }
+  .badge.seed { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); }
+  .badge.both { background: var(--accent-soft); color: var(--accent); border: 1.5px solid var(--accent); }
+  .warn {
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.92rem;
+    margin: 14px 0;
+  }
+  .changes li { margin: 6px 0; }
+  strong.crop { color: var(--accent); }
+  @media (max-width: 520px) {
+    .bed-grid { grid-template-rows: repeat(2, 44px); }
+    .cell { font-size: 0.6rem; }
+    body { padding: 20px 16px 48px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Fall/Winter Garden Plan</h1>
+  <p class="sub">Lafayette, CA (zone 9b) &middot; 3 elevated beds, 2'&times;8', soil surface 36" up &middot; planting starts week of Sept 21 &middot; family of 4</p>
+
+  <nav class="tabs">
+    <button class="active" data-tab="plan">Planting Plan</button>
+    <button data-tab="cal">Calendar</button>
+    <button data-tab="fill">Filling the Beds</button>
+    <button data-tab="water">Watering</button>
+  </nav>
+
+  <div class="tabpane active" id="tab-plan">
+
+  <div class="warn">
+    <strong>Changes from the original plan:</strong>
+    <ul class="changes">
+      <li><strong>Bok choy spacing fixed</strong> — 4/sq ft only works for baby bok choy. Plant at 4/sq ft, then harvest every other plant young so the rest size up to full heads (~2/sq ft).</li>
+      <li><strong>Chard cut from 6 to 4 plants</strong> — 4 healthy chard out-produce what a family of 4 eats. The freed 2 sq ft goes to the bok choy / lettuce rotation.</li>
+      <li><strong>Beet sowings made concrete</strong> — ~2 sq ft (≈18 roots) every 3 weeks ≈ 5–6 beets per week at harvest, instead of one vague big sowing.</li>
+      <li><strong>Dill expectations set</strong> — it nearly stops growing Dec–Jan here. Sow once in October, then pause until mid-February.</li>
+      <li><strong>Garlic variety specified</strong> — softneck (e.g. California Early) suits mild Lafayette winters and stores 6+ months. 32 cloves at 6" confirmed correct for 8 sq ft.</li>
+      <li><strong>Lettuce succession bumped</strong> — 5–6 Little Gem every 2 weeks; 4 every 2 weeks under-supplies four salad eaters.</li>
+      <li><strong>Arugula dropped, spinach in</strong> — same niche (fast, direct-sown, cool-season green), higher family consumption.</li>
+      <li><strong>Elevated beds (36" to soil)</strong> — changes nothing for fall/winter (all crops are short, and height means fewer slugs + easy harvest). Summer changes: tomatoes move to ground-level pots, tall trellises are out, cucumbers trail over the edge instead of climbing.</li>
+    </ul>
+  </div>
+
+  <p><span class="badge start">STARTS</span> buy nursery plants &nbsp; <span class="badge seed">SEEDS</span> direct sow in the bed &nbsp; <span class="badge both">BOTH</span> starts for round one, seeds for successions</p>
+
+  <p class="cap">Each bed has a season slider — drag it to see how that bed's contents change through the year.</p>
+
+  <h2>Bed 1 — Leafy Greens <span class="tag">16 sq ft</span></h2>
+  <div class="card">
+    <p class="cap">North side ← (taller crops) &nbsp;&nbsp; 8 ft wide &times; 2 ft deep</p>
+    <div class="bedviz" data-bed="1"></div>
+    <ul>
+      <li><span class="badge start">STARTS</span><strong class="crop">6 kale</strong> (1/sq ft) — nursery starts, one trip. Mix curly + lacinato. Harvest outer leaves weekly; these produce all winter into spring.</li>
+      <li><span class="badge start">STARTS</span><strong class="crop">4 Swiss chard</strong> (1/sq ft) — nursery starts. Cut-and-come-again like kale.</li>
+      <li><span class="badge both">BOTH</span><strong class="crop">Bok choy rotation, 6 sq ft</strong> — buy ~8 starts for round one (instant head start), then direct-seed every later round at 4/sq ft. Pull every other plant at baby size (~4 weeks), let the rest head up. Re-sow a fresh 2 sq ft block every 2–3 weeks. Overflow squares take lettuce when bok choy supply is ahead of demand.</li>
+    </ul>
+  </div>
+
+  <h2>Bed 2 — Garlic, Beets, Green Onions <span class="tag">16 sq ft</span></h2>
+  <div class="card">
+    <p class="cap">Garlic occupies its half until ~June; the beet half turns over every 3 weeks</p>
+    <div class="bedviz" data-bed="2"></div>
+    <ul>
+      <li><span class="badge seed">CLOVES</span><strong class="crop">Garlic, 8 sq ft</strong> — 32 cloves at 6" spacing, 2" deep, point up, <strong>mid-October</strong>. Softneck variety (California Early or similar). Harvest ~June; 32 heads ≈ one per week for the year with storage.</li>
+      <li><span class="badge seed">SEEDS</span><strong class="crop">Beets, ~4 sq ft in 2 blocks</strong> — always direct sow (they hate transplanting): block A (≈18 roots at 9/sq ft) now, block B by early October (the UC window for fall beets closes — later sowings stall), then resume mid-February. Thin to 3–4"; eat the thinnings as greens.</li>
+      <li><span class="badge seed">SEEDS</span><strong class="crop">Carrots, ~2 sq ft (block C)</strong> — always direct sow, 3" spacing (≈32/block). Your 12" of loose raised-bed soil is ideal carrot ground — no rocks, no forked roots. Sow now and again in February; ready ~70 days. Keep the surface moist until they germinate (they're slow — 2 weeks).</li>
+      <li><span class="badge seed">SEEDS</span><strong class="crop">Green onions, ~2 sq ft + all bed edges</strong> — direct sow densely (a seed every inch), pull as needed. Re-sow edges every 3–4 weeks through October, then pause sowing until mid-February (winter sowings just sit there) — the fall sowings hold in place and carry winter supply.</li>
+    </ul>
+  </div>
+
+  <h2>Bed 3 — Leeks, Herbs, Salad <span class="tag">16 sq ft</span></h2>
+  <div class="card">
+    <p class="cap">Leeks hold their corner until spring; lettuce/cilantro end turns over continuously</p>
+    <div class="bedviz" data-bed="3"></div>
+    <ul>
+      <li><span class="badge start">STARTS</span><strong class="crop">8 leeks, 2 sq ft</strong> — nursery transplants only (from seed they'd need 10+ weeks of babying) at 6" spacing, planted deep (bury to the first leaf split) for long white shanks. Harvest late winter through spring, ~2/month.</li>
+      <li><span class="badge start">STARTS</span><strong class="crop">6 parsley, 6 sq ft</strong> — flat-leaf nursery starts (slow, erratic from seed) on a 12" grid; produces handfuls all winter. Six plants means you can cut hard for cooking without waiting on regrowth.</li>
+      <li><span class="badge seed">SEEDS</span><strong class="crop">Dill, 1 sq ft</strong> — always direct seed (taproot hates transplanting), tidy 3" grid. Sow now, expect slow growth Dec–Jan, re-sow from mid-February.</li>
+      <li><span class="badge seed">SEEDS</span><strong class="crop">Carrots, 2 sq ft (block D)</strong> — second carrot block, sown ~3 weeks after Bed 2's so they mature in waves.</li>
+      <li><span class="badge both">BOTH</span><strong class="crop">Little Gem lettuce, 4 sq ft</strong> — 4/sq ft. Round one: 5–6 nursery starts. Every 2 weeks after: direct seed 5–6 more (or keep buying starts if easier). ~16 heads growing at capacity = steady salads for four.</li>
+      <li><span class="badge seed">SEEDS</span><strong class="crop">Cilantro, 1 sq ft</strong> — always direct sow (bolts fast if transplanted): half now, half in 3 weeks (pale in diagram), keep alternating. Thrives here in the cool season.</li>
+      <li><span class="badge seed">SEEDS</span><strong class="crop">Radish + spinach — gap fillers only</strong> — no dedicated zone anymore: direct sow into any square that empties, in any bed. Radishes 16/sq ft ready in ~30 days; spinach 9/sq ft, cut outer leaves all winter.</li>
+    </ul>
+  </div>
+
+  <h2>Will This Feed a Family of 4?</h2>
+  <div class="card">
+    <p>Yes — quantities are sized to steady weekly eating, not preserving. The two to watch: <strong>kale will over-produce</strong> (6 plants ≈ 6 bunches/week at peak — plan on sharing), and <strong>lettuce is the one you might run short on</strong> if you eat salad daily — expand it into Bed 1's bok choy overflow squares if so.</p>
+    <table>
+      <tr><th>Crop</th><th>Planted</th><th>Expected harvest</th><th>For 4 people</th></tr>
+      <tr><td>Kale</td><td>6 plants</td><td>~5–6 bunches/week, Nov–Apr</td><td>Plenty — likely surplus</td></tr>
+      <tr><td>Swiss chard</td><td>4 plants</td><td>~3–4 bunches/week</td><td>Right-sized</td></tr>
+      <tr><td>Bok choy</td><td>24 spots, rolling</td><td>6–8 heads per 2–3 week cycle</td><td>Stir-fry 1–2×/week ✓</td></tr>
+      <tr><td>Beets</td><td>~18 per sowing, 2 blocks</td><td>~4–6 roots/week + greens</td><td>One side dish/week ✓</td></tr>
+      <tr><td>Carrots</td><td>2 blocks, ~64 total</td><td>~6–8 carrots/week in waves</td><td>Snacking + cooking ✓</td></tr>
+      <tr><td>Garlic</td><td>32 cloves</td><td>32 heads in June</td><td>~6–8 months of cooking</td></tr>
+      <tr><td>Green onions</td><td>dense + edges</td><td>continuous bunches</td><td>Never buy scallions again</td></tr>
+      <tr><td>Leeks</td><td>8 transplants</td><td>~2/month, Feb–Apr</td><td>Occasional soup/braise ✓</td></tr>
+      <tr><td>Little Gem lettuce</td><td>~16 rolling</td><td>~4–5 heads/week</td><td>Tight if daily salads — expand if short</td></tr>
+      <tr><td>Parsley</td><td>6 plants</td><td>big continuous handfuls</td><td>Cook with it freely ✓</td></tr>
+      <tr><td>Cilantro</td><td>1 sq ft rolling</td><td>steady handfuls</td><td>Right-sized</td></tr>
+      <tr><td>Dill</td><td>1 sq ft</td><td>light until spring</td><td>Garnish-level; peaks Mar–May</td></tr>
+      <tr><td>Radish / spinach</td><td>gap fillers</td><td>bonus harvests from empty squares</td><td>Bonus crop</td></tr>
+    </table>
+  </div>
+
+  <h2>Other Crops Worth Adding</h2>
+  <div class="card">
+    <ul>
+      <li><span class="badge seed">SEEDS</span><strong class="crop">Spinach</strong> — already swapped in for arugula. Best direct-sown green for a Lafayette winter; cut outer leaves for months.</li>
+      <li><span class="badge seed">SEEDS</span><strong class="crop">Dwarf sugar snap peas ('Sugar Ann')</strong> — the best case for squeezing in one more thing. Dwarf type stays ~2 ft: no trellis, no height problem. <strong>Timing matters:</strong> the UC pea windows here are Aug–Sept and Feb–Mar — so sow the Bed 3 back-edge row <em>now with everything else</em>, or wait for February. An October sowing falls between windows.</li>
+      <li><span class="badge seed">SEEDS</span><strong class="crop">Carrots — now in the plan</strong> — block C of Bed 2's root section (see diagram). 12" of loose, rock-free soil grows the straightest carrots you'll ever pull.</li>
+      <li><span class="badge start">STARTS</span><strong class="crop">Chives</strong> — one clump in a corner of any bed. Perennial: plant once, snip for years, takes ~half a sq ft. The easiest herb you'll ever grow.</li>
+      <li><span class="badge start">STARTS</span><strong class="crop">Strawberries</strong> — elevated beds are the best strawberry real estate there is: no slugs, fruit hangs over the edge, kids pick at eye level. Plant bare-root crowns (cheap) in late fall along the front edge of one bed, or give them their own strip next summer. First real crop the following spring.</li>
+      <li><span class="badge seed">SEEDS</span><strong class="crop">Mizuna / Asian mustard greens</strong> — if the family likes salad variety: cut-and-come-again like arugula but milder, very fast, happy all winter. Use as a gap filler alongside radish/spinach.</li>
+      <li><strong class="crop">Perennial herbs (rosemary, thyme, oregano)</strong> — worth having but not bed space: they want lean, dry soil and live for years. Put them in pots on the ground next to the tomato pots.</li>
+      <li><strong>Skipped on purpose:</strong> broccoli/cauliflower/cabbage (one head per 2–3 sq ft, months of waiting), fava beans (space-hungry), celery (fussy), and anything you named as low priority. Not worth bed space at 48 sq ft.</li>
+    </ul>
+  </div>
+
+  <h2>What Happens to These Beds Later?</h2>
+  <div class="card">
+    <p><strong>Short answer: don't reserve any space now.</strong> The fall plan clears itself in waves at exactly the right times — use the slider above to watch it happen.</p>
+    <ul>
+      <li><strong>March–April:</strong> leeks, remaining beets, and winter lettuce finish just as spring sowing starts. Gaps refill with the same successions.</li>
+      <li><strong>May:</strong> kale, chard and cilantro bolt in the heat — pulling them opens Bed 1 and half of Bed 3 right at summer planting time. Since cucumbers and peppers are your big eaters: <strong>10 peppers total</strong> (6 in Bed 1, 4 in Bed 3 — mix bells with a faster type like shishito or gypsy) and <strong>5 cucumbers</strong> trailing over the front edges, plus a 2nd cucumber sowing in mid-June because plants peter out by August. Basil fills Bed 1's middle.</li>
+      <li><strong>Bush beans stay in Bed 2 only</strong> — and yes, they earn it: bush types are compact (no trellis, no height problem on elevated beds) and yield heavily for ~6 weeks per sowing. Any leftover nitrogen from their roots is a small bonus, not a fertility plan — most fixed nitrogen leaves in the harvested pods; the 4-4-4 at zone turnover is what actually feeds the fall crops.</li>
+      <li><strong>Tomatoes: pots on the ground, not beds.</strong> Your soil surface is 36" up — an indeterminate tomato would fruit at 8–9 ft. Plant 2–3 tomatoes in 15+ gallon pots (or half wine barrels) at ground level near the beds. Bonus: beds stay free for higher-turnover crops.</li>
+      <li><strong>The one real commitment: garlic.</strong> It locks half of Bed 2 until ~June. That's the trade you're making, and it's fine — its half comes free in time for a second bean sowing, and everything else in Bed 2 (beets, onions) clears whenever you need it.</li>
+      <li><strong>Late September:</strong> summer crops come out and the fall plan runs again — but <strong>shift the entire layout one bed over each year</strong> (Bed 1's plan → Bed 2, 2 → 3, 3 → 1). Rotating only the alliums isn't enough: brassicas in the same bed every fall build up pests, and UC IPM calls for keeping alliums out of a bed 2–3 years where rust or white rot appears. Green-onion edges are the one calculated exception (pulled young and shallow) — but if allium rust ever shows, go strictly allium-free in that bed for 2–3 years.</li>
+    </ul>
+  </div>
+
+  <h2>Shopping List</h2>
+  <div class="card">
+    <h3>Nursery starts (buy this week)</h3>
+    <ul>
+      <li>6 kale (mix of varieties)</li>
+      <li>4 Swiss chard</li>
+      <li>8 bok choy — pick a bolt-resistant compact type (Mei Qing Choi / Toy Choy); heat-checked transplants bolt</li>
+      <li>3–4 sweet alyssum plugs (bed corners — aphid control, see Working Rules)</li>
+      <li>8 leek transplants (often sold as a bundle)</li>
+      <li>6 flat-leaf parsley</li>
+      <li>5–6 Little Gem lettuce (first round)</li>
+    </ul>
+    <h3>Seed packets</h3>
+    <ul>
+      <li>Little Gem (or other mini romaine) lettuce</li>
+      <li>Beets (Detroit Dark Red or a mix)</li>
+      <li>Green/bunching onions</li>
+      <li>Bok choy</li>
+      <li>Cilantro (slow-bolt type)</li>
+      <li>Dill</li>
+      <li>Radish</li>
+      <li>Spinach</li>
+      <li>Carrots (Nantes type)</li>
+      <li>Sugar snap peas (optional — see suggestions)</li>
+    </ul>
+    <h3>Garlic (plant mid-October)</h3>
+    <ul>
+      <li>4–5 softneck seed-garlic bulbs → pick the 32 biggest cloves. The UC Contra Costa guide's named picks for interior areas: <strong>Early Italian Purple and California Late</strong> (Cal Late stores and tastes better in warm-interior spots); California Early and Inchelium Red also work. Best move: half Early + half Late for a harvest spread. Seed garlic from a nursery, not grocery-store garlic (often sprout-inhibited).</li>
+    </ul>
+    <h3>Gear (one-time, ~$50)</h3>
+    <ul>
+      <li>4 wire hoops + lightweight insect netting for Bed 1 (Sept–Nov cabbage worms/aphids/leafminers)</li>
+      <li>30–40% shade cloth, one small piece (heat-wave insurance for planting week; clips to the same hoops)</li>
+      <li>Bt spray (organic caterpillar backup) + Sluggo</li>
+    </ul>
+  </div>
+
+  <h2>Working Rules</h2>
+  <div class="card">
+    <ul>
+      <li>Taller crops (kale, leeks, garlic) on the north side of each bed so they don't shade the low stuff.</li>
+      <li>Bed edges everywhere = green onions. They take no meaningful space and you'll never buy scallions again.</li>
+      <li>Never sow a whole crop at once — every fast crop (lettuce, bok choy, beets, cilantro, radish) goes in as small repeated blocks.</li>
+      <li>Kale and chard are harvested by outer leaves only; never cut the whole plant.</li>
+      <li>Any square that empties gets radish or spinach the same day.</li>
+      <li><strong>Interplant fast under slow:</strong> tuck radish/spinach/lettuce between the young kale and chard now (out before the canopy closes ~Nov); mix a few radish seeds into each carrot sowing (they mark the rows, and pulling them at day 30 thins and loosens the block); slip a last lettuce round between the May pepper transplants. Don't squeeze anything into the garlic, onion, or cilantro/dill grids — those are already at full density.</li>
+      <li>Light frosts (Lafayette gets a few, Dec–Jan) are fine — every crop here is frost-hardy, and kale sweetens after frost. No covers needed.</li>
+      <li>Elevated beds drain and dry faster than ground beds — check soil moisture every 2–3 days in fall, and don't trust rain alone until December.</li>
+      <li>Watch for slugs/snails on seedlings after fall rains start (your 24" of height helps a lot here) — Sluggo (iron phosphate, pet-safe) around new transplants.</li>
+      <li><strong>Insect netting over Bed 1, transplant day through ~Thanksgiving.</strong> Sept–Nov is peak cabbage-white butterfly and aphid season on fall brassicas (UC IPM: row cover at transplanting, edges secured, prevents egg-laying; it also excludes the chard/beet leafminer fly). Hoops + lightweight netting ≈ $25 for a 2'×8' bed — the single biggest yield-saver in this plan. Keep Bt (organic) on the shelf for breakthroughs.</li>
+      <li>Leafminers on chard and beets (same fly, same family): ignore on beets — roots are unaffected; on chard just strip mined leaves. The Bed 1 netting handles the rest.</li>
+      <li><strong>Sweet alyssum at the bed corners</strong> — the one companion planting with real UC evidence: UC IPM field trials showed alyssum interplanted in lettuce measurably cut aphids by feeding hoverflies whose larvae each eat 100+ aphids. 3–4 plugs cascade over the elevated-bed edges and take no crop space.</li>
+    </ul>
+  </div>
+  </div><!-- /tab-plan -->
+
+  <div class="tabpane" id="tab-cal">
+    <p class="cap">Everything, dated, Sept 2026 → Sept 2027. Recurring rhythms are at the bottom.</p>
+
+    <h2>Setup Week — Sept 21–27, 2026</h2>
+    <div class="card">
+      <table>
+        <tr><th>Date</th><th>Task</th></tr>
+        <tr><td><strong>Mon Sept 21</strong></td><td>Soil in and settled? If not: fill beds, water deeply, let settle. Top up 1–2" after settling, rake in 4-4-4 organic fertilizer.</td></tr>
+        <tr><td><strong>Tue Sept 22</strong></td><td>Shopping run — starts: 6 kale, 4 chard, 8 bok choy (Mei Qing Choi type), 8 leeks, 6 parsley, 5–6 Little Gem, 3–4 alyssum plugs. Seeds: lettuce, beets, carrots (Nantes), green onions, bok choy, cilantro, dill, radish, spinach, snap peas (Sugar Ann), bush beans (for May). Garlic: 2 Early Italian Purple + 2 California Late bulbs. Gear: hoops, insect netting, 30–40% shade cloth, Bt, Sluggo.</td></tr>
+        <tr><td><strong>Wed Sept 23</strong></td><td>Transplant everything (evening if 88°F+ forecast — clip shade cloth over new transplants for the first week): Bed 1 kale + chard + bok choy starts; Bed 3 leeks (deep, to first leaf split) + parsley + lettuce. Alyssum at bed corners.</td></tr>
+        <tr><td><strong>Wed Sept 23</strong></td><td>Direct sow: Bed 2 beet block A + carrot block C + green onions; Bed 3 cilantro (left half) + dill + snap peas along back edge; green onions on all bed edges; radish/spinach in any spare squares.</td></tr>
+        <tr><td><strong>Wed Sept 23</strong></td><td>Install hoops + insect netting over Bed 1, edges secured (stays on until ~Thanksgiving).</td></tr>
+        <tr><td><strong>Sept 23 – Oct 7</strong></td><td>Water lightly <strong>every day</strong> — seed beds (especially carrots) must never crust over. Carrots take ~2 weeks to germinate; don't give up.</td></tr>
+      </table>
+    </div>
+
+    <h2>October 2026</h2>
+    <div class="card">
+      <table>
+        <tr><th>Date</th><th>Task</th></tr>
+        <tr><td><strong>~Oct 5</strong></td><td>Sow beet block B (hard deadline early Oct — the UC window closes). Lettuce round 2 (5–6), bok choy round 2 (2 sq ft block). Remove shade cloth if it was used.</td></tr>
+        <tr><td><strong>Oct 7</strong></td><td>Germination done — shift watering to deep soak every 2–3 days.</td></tr>
+        <tr><td><strong>Wed Oct 14</strong></td><td><strong>Plant garlic</strong>: 32 biggest cloves, 6" grid, 2" deep, point up. Sow carrot block D (Bed 3). Sow cilantro right half.</td></tr>
+        <tr><td><strong>~Oct 19</strong></td><td>Lettuce round 3, bok choy round 3. Re-sow edge onions (last onion sowing until Feb). First radishes ready (~30 days from sowing).</td></tr>
+        <tr><td><strong>By ~Oct 12</strong></td><td>40×60 clay area: spread the clay pile to grade, broadcast ~2 lb crimson clover before the first real rain, rake in. Build clay mounds (12–18", compost-capped) at future tree spots.</td></tr>
+        <tr><td><strong>Late Oct</strong></td><td>First rains: put Sluggo around seedlings. Thin beets to 3–4" (eat thinnings as greens). Check under the Bed 1 netting weekly for aphids/worms — Bt if found.</td></tr>
+      </table>
+    </div>
+
+    <h2>November 2026</h2>
+    <div class="card">
+      <table>
+        <tr><th>Date</th><th>Task</th></tr>
+        <tr><td><strong>~Nov 2</strong></td><td>Last lettuce + bok choy rounds before the slow season. Thin carrots to 3".</td></tr>
+        <tr><td><strong>~Nov 15</strong></td><td>First frost possible (all crops hardy — no action). Watering down to every 3–4 days unless raining; don't trust light rains to penetrate 2".</td></tr>
+        <tr><td><strong>~Nov 26</strong></td><td><strong>Remove Bed 1 netting</strong> (cabbage-white season over). First full bok choy heads and baby beets. Kale sweetens after first frost.</td></tr>
+      </table>
+    </div>
+
+    <h2>December 2026 – January 2027</h2>
+    <div class="card">
+      <table>
+        <tr><th>Date</th><th>Task</th></tr>
+        <tr><td><strong>All winter</strong></td><td>Harvest mode: outer kale/chard leaves weekly, bok choy, lettuce, radishes, cilantro, parsley, green onions, beet block A. No sowing, no feeding.</td></tr>
+        <tr><td><strong>~Dec 15</strong></td><td>First carrots ready (block C). Pull as needed — they hold in the ground and sweeten.</td></tr>
+        <tr><td><strong>Weekly</strong></td><td>Finger test only; water solely in a 10+ day dry stretch. Overwatering cold soil rots garlic and beets.</td></tr>
+      </table>
+    </div>
+
+    <h2>February 2027</h2>
+    <div class="card">
+      <table>
+        <tr><th>Date</th><th>Task</th></tr>
+        <tr><td><strong>Jan–Feb</strong></td><td>Bare-root season: plant trees into the clay mounds in the 40×60 area (root flare above grade, no amendments in the hole, 3–4" mulch circle off the trunk).</td></tr>
+        <tr><td><strong>~Feb 15</strong></td><td><strong>The restart.</strong> Resume all successions: lettuce + bok choy every 2 weeks, beets + carrots in emptied blocks, cilantro halves, dill, edge onions. Sow snap peas (2nd window: Feb–Mar) if the fall row is done. Scratch 4-4-4 into each zone as it turns over (skip zones top-dressed with compost in the last 6 weeks).</td></tr>
+        <tr><td><strong>Late Feb</strong></td><td>First leeks ready — harvest ~2/month through April. Watering back to weekly-ish as rains allow.</td></tr>
+      </table>
+    </div>
+
+    <h2>March – April 2027</h2>
+    <div class="card">
+      <table>
+        <tr><th>Date</th><th>Task</th></tr>
+        <tr><td><strong>Every 2–3 wks</strong></td><td>Keep lettuce/bok choy/cilantro/radish successions rolling — this is peak growth. Snap peas harvest Feb–Apr.</td></tr>
+        <tr><td><strong>March</strong></td><td>Watch garlic for orange allium rust pustules — strip affected leaves immediately (UC IPM). Dill takes off; start cutting.</td></tr>
+        <tr><td><strong>~Apr 15</strong></td><td>Finish the leeks. Pull anything bolting. Watering up to every 2–3 days as temps climb.</td></tr>
+        <tr><td><strong>Late Apr</strong></td><td>Summer shopping: 10 pepper starts (mix bells + shishito/gypsy), 4 basil, 5 cucumber starts (or seeds), bush bean seeds, 2–3 tomato starts + 15-gal pots + potting soil.</td></tr>
+      </table>
+    </div>
+
+    <h2>May – June 2027</h2>
+    <div class="card">
+      <table>
+        <tr><th>Date</th><th>Task</th></tr>
+        <tr><td><strong>~May 1–10</strong></td><td><strong>Summer changeover.</strong> Pull bolting kale, chard, cilantro. Top-dress 1–2" compost on cleared zones (then no fertilizer there for 6 weeks). Plant: Bed 1 → 6 peppers + 4 basil + 3 cucumbers (front edge); Bed 3 → 4 peppers + 2 cucumbers; Bed 2 beet/carrot half → bush beans. Tomatoes into ground pots.</td></tr>
+        <tr><td><strong>May</strong></td><td>Watering to every 1–2 days, deep. Tomato pots: daily without fail (prevents blossom-end rot).</td></tr>
+        <tr><td><strong>~Jun 15</strong></td><td><strong>Garlic harvest</strong> when lower leaves brown: lift, cure 2–3 weeks in shade, then store (softnecks keep 6+ months). Sow cucumber round 2 in Bed 3's middle (replaces last lettuce).</td></tr>
+        <tr><td><strong>~Jul 1</strong></td><td>Sow bush beans round 2 in the cleared garlic half.</td></tr>
+      </table>
+    </div>
+
+    <h2>July – September 2027</h2>
+    <div class="card">
+      <table>
+        <tr><th>Date</th><th>Task</th></tr>
+        <tr><td><strong>Jul–Aug</strong></td><td>Harvest peppers, cucumbers, beans, basil, tomatoes. Pick cucumbers/beans every 2–3 days — letting them oversize shuts the plant down. Daily or every-other-day deep watering.</td></tr>
+        <tr><td><strong>~Sept 15</strong></td><td>Order 1/2 yard compost + fresh seed garlic. Pull finished summer crops as they wind down.</td></tr>
+        <tr><td><strong>~Sept 21</strong></td><td><strong>Restart the fall plan — shifted one bed over</strong> (Bed 1's layout → Bed 2, 2 → 3, 3 → 1) for pest/disease rotation. Top-dress compost first.</td></tr>
+      </table>
+    </div>
+
+    <h2>Recurring Rhythms</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Every 2 weeks (Sept–Nov, Feb–May):</strong> 5–6 lettuce + a 2 sq ft bok choy block.</li>
+        <li><strong>Every 3 weeks (same windows):</strong> cilantro half-patch; a beet or carrot block wherever one emptied.</li>
+        <li><strong>Same day any square empties:</strong> radish or spinach seed goes in.</li>
+        <li><strong>Weekly, year-round:</strong> harvest walk — outer leaves of kale/chard, anything ready, finger test the soil at a bed corner.</li>
+        <li><strong>At every zone turnover:</strong> handful of 4-4-4 scratched in (unless composted within 6 weeks).</li>
+        <li><strong>Twice a year (May + Sept):</strong> 1–2" compost top-dress. Never dig the beds over.</li>
+      </ul>
+    </div>
+  </div><!-- /tab-cal -->
+
+  <div class="tabpane" id="tab-fill">
+    <h2>Getting the Soil — Instructions Anyone Can Follow</h2>
+    <div class="card">
+      <p><strong>Goal:</strong> fill three 2'&times;8'&times;12" beds = 48 cu ft (~1.8 cu yd) of planting mix, ready by Wed Sept 23. Already decided: the excavated foundation soil is clay subsoil and does <em>not</em> go in the beds (failed the ribbon test); the Kellogg Amend bags <em>do</em> go in, blended.</p>
+      <h3>Step 1 — Count the Amend bags ✓ DONE</h3>
+      <p><strong>Counted: 10+ bags → we are on the BLEND path.</strong> Buy 1.5 yards of plain screened topsoil/sandy loam (~$150–200 delivered) and blend with the Amend. (For reference: fewer than 10 bags would have meant buying ready-made veggie mix instead.)</p>
+      <h3>Step 2 — Make the calls (in this order, stop at the first yes)</h3>
+      <ol>
+        <li><strong>Contra Costa Topsoil, Martinez — (925) 228-4007</strong> (M–F). BLEND path: ask for 1.5 yards of <em>screened topsoil or sandy loam</em> delivered to Lafayette 94549.</li>
+        <li><strong>Diamond K Supply, Lafayette — (925) 284-4478</strong> (M–F 7:00–3:30). Local, so delivery should be cheapest. Same ask; they may also have a veggie blend.</li>
+        <li><strong>Acapulco Rock &amp; Soil, Richmond — (510) 526-3800</strong>. SIMPLE path or fallback: 2 yards of their Veggie Mix ($87.95/yd posted).</li>
+        <li><strong>American Soil &amp; Stone, Richmond — (510) 292-3000</strong> (open 7 days — the weekend option). 2 yards of Local Hero Veggie Mix.</li>
+      </ol>
+      <p>Ask each: current price/yd + delivery fee to 94549 for this load; can they deliver this week (Saturday?); will the driver dump on a tarp on the driveway; any minimum-order surcharge.</p>
+      <p><strong>Decision rule:</strong> if plain topsoil delivered comes to more than ~$250 all-in, skip the blending and just order 2 yd of veggie mix from whoever delivers cheapest — the labor savings is worth the difference.</p>
+      <p><strong>Big-box fallback (if delivery can't happen this week):</strong> the only worthwhile bagged route is <strong>Kellogg Raised Bed &amp; Potting Mix 2 cu ft at Lowe's — real Sept 2026 cart price: $318.52 for 24 bags ($13.27/bag; ~$345 with settling extras)</strong> — Kellogg's one ready-to-use standalone product; save the Amend for elsewhere and expect 20–30% settling by next season. At ~$345 this only makes sense if both bulk quotes somehow exceed it — unlikely. Do NOT buy big-box bagged "topsoil" for the mineral fraction: Sta-Green/Timberline ($2–4 bags) are unscreened fill with debris, and Scotts "Premium Topsoil" is actually a peat/wood soil conditioner, not mineral soil.</p>
+      <h3>Step 3 — Delivery day</h3>
+      <ul>
+        <li>Lay a large tarp on the driveway before the truck arrives; have them dump on it.</li>
+        <li>BLEND path, per bed: alternate wheelbarrow loads — 2 loads topsoil, 1 load (≈3 bags) Amend — and fork them together in the bed as you go. Fill to the rim.</li>
+        <li>SIMPLE path: just fill to the rim.</li>
+      </ul>
+      <h3>Step 4 — Settle and finish (before planting Wednesday)</h3>
+      <ol>
+        <li>Water each bed deeply until it drains from the bottom.</li>
+        <li>Wait 1–2 days; the soil will drop 1–2".</li>
+        <li>Top up to the rim with the leftover pile, water again.</li>
+        <li>Rake a balanced organic fertilizer (4-4-4, bag rate) into the top 2–3".</li>
+        <li>Cover the leftover pile with the tarp — it's the spring top-up supply.</li>
+      </ol>
+    </div>
+
+    <h2>How Much Soil</h2>
+    <div class="card">
+      <p>Each bed holds 2' &times; 8' &times; 1' = <strong>16 cu ft</strong>. All three: <strong>48 cu ft ≈ 1.8 cubic yards</strong>. That's a bulk delivery, not a bag run — bagged mix for this volume costs 3–4&times; more. Bay Area soil yards (e.g. American Soil &amp; Stone in Richmond) sell blended raised-bed mix by the yard and deliver; order <strong>2 yards</strong> so you have extra for settling and spring top-ups.</p>
+    </div>
+    <h2>Cost — Three Ways to Fill 48 cu ft</h2>
+    <div class="card">
+      <table>
+        <tr><th>Option</th><th>What it takes</th><th>Est. cost</th><th>Verdict</th></tr>
+        <tr>
+          <td><strong>Bulk, delivered</strong></td>
+          <td>2 yd blended raised-bed/veggie mix from a soil yard (~$75–110/yd) + delivery (~$80–150)</td>
+          <td><strong>$230–370</strong></td>
+          <td><strong>← Recommended</strong></td>
+        </tr>
+        <tr>
+          <td>Bulk, self-haul</td>
+          <td>Same mix, picked up — a pickup or trailer carries ~1 yd/trip, so 2 trips; a yard weighs ~1,000+ lb</td>
+          <td>$150–220</td>
+          <td>Only if you already own the truck</td>
+        </tr>
+        <tr>
+          <td>Bagged mix</td>
+          <td>With ~10% for settling: <strong>35 bags</strong> @ 1.5 cu ft, <strong>26</strong> @ 2 cu ft, or <strong>18</strong> @ 3 cu ft ($12–16/bag for the 1.5s; biggest bags = cheapest per cu ft). ~11–12 small or 6 big bags per bed.</td>
+          <td>$380–510</td>
+          <td>Skip — most cost, most work, most plastic</td>
+        </tr>
+      </table>
+      <p><strong>Recommendation: bulk delivery of a pre-blended veggie/raised-bed mix, ~$300 all-in</strong> — dropped on a tarp near the beds. Cheapest per cubic foot at real quality, the extra ~0.2 yd covers settling top-ups, and delivery beats 2,000 lb of shoveling into a truck twice.</p>
+      <p class="cap">Ongoing cost after year one is small: ~1/2 yd of compost per year for top-dressing (~$40–80 delivered with something else, or a few bags) + a box of 4-4-4.</p>
+    </div>
+
+    <h2>Using What You Have (foundation soil + Kellogg Amend)</h2>
+    <div class="card">
+      <p><strong>Ribbon test the dug-up soil first</strong> — a 2-minute field test for clay content. Moisten a golf-ball lump to putty consistency and knead it into a ball. Hold it between your thumb and the side of your bent index finger, then push the soil forward with your thumb, squeezing it out into a flat strip (the "ribbon" — like toothpaste from a tube) extending over your finger's edge until it breaks off under its own weight. Clay is sticky, so the longer the ribbon holds, the more clay:</p>
+      <ul>
+        <li><strong>Won't form a ball, or ribbon breaks under ~1", crumbly</strong> → sandy loam/topsoil. Use it.</li>
+        <li><strong>Ribbon holds 1–2"</strong> → some clay; workable if blended generously with Amend and pumice.</li>
+        <li><strong>Ribbon holds 2"+, shiny, like modeling clay</strong> → clay subsoil (the Lafayette default for foundation digs). Keep it out of the beds — clay in a contained 12" box drains badly no matter how much you amend it. Use it to fill yard low spots instead.</li>
+      </ul>
+      <p><strong>Test result (Sept 2026): the foundation soil failed</strong> — sticky, easy ball, ribbon held past 2". It stays out of the beds. The plan: 1–1.5 yd screened topsoil/sandy loam delivered (Contra Costa Topsoil ~$40/yd, (925) 228-4007), blended in the beds at ~2 parts topsoil : 1 part Kellogg Amend. ≈$150–200 all-in.</p>
+      <ul>
+        <li><strong>Kellogg Amend is an amendment, not a fill</strong> — alone it slumps 30–40% as it decomposes and holds water badly. Blended into mineral soil (its actual job), it's the organic fraction of a proper mix.</li>
+        <li><strong>Kellogg "Garden Soil for Flowers &amp; Vegetables" — checked and rejected as a fill (Sept 2026):</strong> same category as Amend — composted forest products + manure, zero mineral soil. Kellogg's own guidance: mix 1:2 with native soil; "not formulated as stand-alone soil mixes." Reviews of standalone use match: slumping, hydrophobic drying, wood chunks, yellowing plants. 16 bags ≈ $135–200 — no cheaper than real topsoil delivered. Don't buy it; the Amend on hand already covers the organic fraction.</li>
+        <li><strong>If the soil passes:</strong> screen out rocks/debris, blend ~50% screened soil + 40% Amend + 10% pumice/perlite. Fills the beds nearly free. All three beds need ~19 cu ft of Amend ≈ 9–10 two-cu-ft bags.</li>
+        <li><strong>If it fails:</strong> hybrid plan — buy 1–1.5 yd plain screened topsoil (Contra Costa Topsoil posts ~$40/yd) and blend your Amend bags in. Roughly $150–200 all-in vs ~$300 for pre-blended veggie mix.</li>
+        <li><strong>Caution:</strong> screen out concrete chunks (cement raises pH). Spoil from a new build is just native dirt; if the dig was near an old demolished structure, don't use it for edibles (lead-paint era).</li>
+      </ul>
+    </div>
+
+    <h2>Who to Call (verified Sept 2026)</h2>
+    <div class="card">
+      <p><strong>Call first: Diamond K Supply — (925) 284-4478</strong> — 3671 Mt. Diablo Blvd, right in Lafayette. Family-owned since 1936, advertises next-day soil delivery, and at 2 yards the delivery fee dominates the bill, so the local yard usually wins. No posted prices and weekdays only (M–F 7:00–3:30); confirm on the phone that their soil is a true ready-to-plant veggie blend — if not, use the backup.</p>
+      <p><strong>Backup (best-known veggie mix): American Soil &amp; Stone, Richmond — (510) 292-3000.</strong> Their "Local Hero Veggie Mix" is the East Bay standard for raised veggie beds. Open 7 days (only weekend option). Prices and zip-based delivery fee: call.</p>
+      <table>
+        <tr><th>Supplier</th><th>Phone</th><th>Product</th><th>$/yd</th><th>Notes</th></tr>
+        <tr><td><strong>Diamond K Supply</strong>, Lafayette</td><td>(925) 284-4478</td><td>soil blends — confirm veggie mix</td><td>call</td><td>Local = cheapest delivery; next-day; M–F only</td></tr>
+        <tr><td><strong>American Soil &amp; Stone</strong>, Richmond</td><td>(510) 292-3000</td><td>Local Hero Veggie Mix</td><td>call</td><td>The known-quality pick; open 7 days; fee by zip</td></tr>
+        <tr><td><strong>Acapulco Rock &amp; Soil</strong>, Richmond</td><td>(510) 526-3800</td><td>Veggie Mix (OMRI compost, coco, lava, pumice)</td><td><strong>$87.95 posted</strong></td><td>Only posted price found; ≈$240–300 for 2 yd delivered</td></tr>
+        <tr><td><strong>Sloat bulk yard</strong>, Danville</td><td>(925) 820-1273</td><td>Diablo Mix (in-ground or raised beds)</td><td>call</td><td>New yard, Mon–Sat, "often same-day" delivery</td></tr>
+        <tr><td><strong>Contra Costa Topsoil</strong>, Martinez</td><td>(925) 228-4007</td><td>Planter Box Mix</td><td>call (~$40/yd plain topsoil)</td><td>Lafayette explicitly in their delivery area; M–F</td></tr>
+        <tr><td><strong>MacAlvey's</strong>, Martinez</td><td>(925) 228-6610</td><td>soil mixes</td><td>call</td><td>Free delivery over a purchase threshold; Mon–Sat</td></tr>
+      </table>
+      <p class="cap">Now-closed yards to skip: Mt. Diablo Landscape Centers (absorbed into SiteOne). Only Acapulco posts prices online — every delivery fee to 94549 is call-for-quote; typical East Bay short-haul runs $60–150.</p>
+      <h3>Ask on the call</h3>
+      <ul>
+        <li>"Is your veggie/planting mix ready to plant edibles into as-is, or do I need to amend it?"</li>
+        <li>"Current price per yard, and the delivery fee to Lafayette 94549 for 2 yards? Any minimum or small-load surcharge?"</li>
+        <li>"Can you deliver this week — Saturday possible? Will the driver dump on a tarp on my driveway?"</li>
+        <li>"If 2 yards is under your delivery minimum, what's the cheapest way to get it (e.g. 1-yd bulk bags)?"</li>
+      </ul>
+    </div>
+
+    <h2>The Mix</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Buy a pre-blended "raised bed" or "veggie" mix</strong> from the soil yard — typically sandy loam + compost + aeration. This is the whole answer; the ratios below are only if you blend yourself.</li>
+        <li>DIY ratio: ~60% quality topsoil/sandy loam, ~30% compost, ~10% pumice or perlite.</li>
+        <li><strong>Never fill with</strong>: native Lafayette clay (drains terribly in a box), pure compost (slumps, goes anaerobic, too hot with nutrients), or bagged "garden soil" meant for in-ground amending.</li>
+        <li><strong>No gravel/drainage layer at the bottom</strong> — it's a myth. A coarse layer creates a perched water table and makes drainage <em>worse</em>. Soil all the way down; just make sure the box bottom has drainage holes (and hardware cloth if open-bottomed, for rodents).</li>
+        <li>Cardboard over drainage holes at fill time keeps soil in while roots and water still pass once it softens.</li>
+      </ul>
+    </div>
+    <h2>The 40'×60' Clay Area (future clover + trees)</h2>
+    <div class="card">
+      <p><strong>This is where the excavated clay pile goes, and fall is exactly the right time to start.</strong> Clay under clover and trees is an asset, not a problem — clover tolerates clay and fixes nitrogen, trees on mounds get drainage where they need it, and every year of cover improves the soil for free. The sequence:</p>
+      <ol>
+        <li><strong>Now (late Sept):</strong> spread the clay pile across the area to rough grade — fill lows, crown it slightly so water sheds. Do it while the clay is dry-ish; never work it wet. Don't till.</li>
+        <li><strong>Early–mid Oct (before the first real rain):</strong> broadcast <strong>crimson clover seed, ~2 lb for 2,400 sq ft</strong>, rake lightly so seed contacts soil, and let the rains germinate it. No irrigation needed after establishment. It greens all winter, blooms red in April, and its roots + nitrogen start fixing the clay's structure from year one.</li>
+        <li><strong>Now–Oct:</strong> decide tree spots and build a <strong>12–18" mound of the clay at each</strong>, capped with 2–3" of compost. Mound planting is the standard clay-country technique: roots get drainage up top, moisture reserves below.</li>
+        <li><strong>Jan–Feb (bare-root season):</strong> plant the trees into the mounds — bare-root is half the price of potted and establishes better. Plant high (root flare above grade), never amend the planting hole itself (amended holes in clay become bathtubs), mulch 3–4" deep in a 3-ft circle kept off the trunk.</li>
+        <li><strong>Every year after:</strong> mow or crimp the clover in late spring and let it self-seed or re-sow each October; top the tree circles with compost + chips. In 3–5 years the top foot is real soil.</li>
+      </ol>
+      <p class="cap">Skip: gypsum (only helps sodic soils — most East Bay clay isn't), sand (clay + affordable amounts of sand ≈ adobe), and rototilling (destroys what structure exists).</p>
+    </div>
+
+    <h2>Filling and Feeding</h2>
+    <div class="card">
+      <ul>
+        <li>Fill to the rim, <strong>water deeply, let it settle 2–3 days, top up</strong> — it will drop 1–2". Do this before planting week so beds are ready Sept 21.</li>
+        <li>At planting, rake in a balanced organic fertilizer (e.g. 4-4-4, per the bag rate). Leafy greens and alliums are hungry; compost alone runs out mid-season.</li>
+        <li>Every time a zone turns over (a beet block out, a lettuce round in), scratch a handful of fertilizer into just that zone — <strong>except within ~6 weeks of a compost top-dress</strong> (fresh compost carries nutrients; stacking both over-applies salts in a contained bed, and winter rains leach the rest).</li>
+        <li>Each fall and each spring: 1–2" of fresh compost on top. Never dig the bed over — top-dress and let the worms do it.</li>
+        <li>Mulch paths of exposed soil with 1" of straw or fine bark once seedlings are up — cuts evaporation dramatically in an elevated bed.</li>
+      </ul>
+    </div>
+  </div><!-- /tab-fill -->
+
+  <div class="tabpane" id="tab-water">
+    <h2>The One Rule for Elevated Beds</h2>
+    <div class="card">
+      <p>Your beds drain and dry <strong>faster than any in-ground garden</strong> — air hits them from five sides. The finger test beats any schedule: push a finger 2" into the soil. Dry at 2" = water. Damp = wait. When you do water, water <strong>deeply</strong> (until it runs from the drainage holes), not a daily sprinkle — deep roots handle heat, shallow roots die on the first hot weekend.</p>
+    </div>
+    <h2>Best Setup: Drip on a Timer</h2>
+    <div class="card">
+      <ul>
+        <li>Worth doing from day one: <strong>2 lines of 1/4" drip emitter tubing (or soaker hose) per bed</strong>, one down each long half, on a cheap hose-end battery timer. Under $100 for all three beds.</li>
+        <li>Fall baseline: <strong>20–30 min every 2–3 days</strong>, then dial down as rains arrive and off Dec–Jan except dry spells.</li>
+        <li>Summer baseline: 20–30 min daily or every other day. Adjust by finger test, not faith in the timer.</li>
+        <li>Hand watering works too — it just has to actually happen, including the August vacation week. That's why the timer wins.</li>
+      </ul>
+    </div>
+    <h2>Season by Season</h2>
+    <div class="card">
+      <table>
+        <tr><th>When</th><th>Watering</th></tr>
+        <tr><td><strong>Sept–Oct (establishment)</strong></td><td>The critical window. New seeds and transplants: light water <strong>daily</strong> for the first 2 weeks — seed beds (especially carrots) must never crust over. Then shift to deep water every 2–3 days.</td></tr>
+        <tr><td><strong>Nov</strong></td><td>Every 3–4 days unless it rains. Don't trust the first light rains — they often don't penetrate 2".</td></tr>
+        <tr><td><strong>Dec–Feb</strong></td><td>Mostly off. Check weekly with the finger test; water only in a dry stretch of 10+ days. Overwatering in cold soil rots garlic and beets.</td></tr>
+        <tr><td><strong>Mar–May</strong></td><td>Ramp back up as growth and temperatures climb: every 2–3 days by May.</td></tr>
+        <tr><td><strong>Jun–Sep</strong></td><td>Daily or every other day, deep. Tomato pots on the ground: <strong>daily without fail</strong> — swinging wet/dry is what causes blossom-end rot and split fruit.</td></tr>
+      </table>
+    </div>
+    <h2>Habits That Matter</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Morning watering</strong>, not evening — leaves dry fast, mildew stays away.</li>
+        <li>Water the <strong>soil, not the leaves</strong> — especially chard, lettuce and cucumbers (mildew magnets).</li>
+        <li>Elevated beds dry <strong>from the edges inward</strong> — check a corner, not the center, and make sure drip lines reach within 6" of the ends.</li>
+        <li>Wilting at 4pm on a hot day is normal (heat stress); wilting at 8am means water <em>now</em>.</li>
+        <li>After fertilizing or sowing, always water in the same day.</li>
+      </ul>
+    </div>
+  </div><!-- /tab-water -->
+</main>
+<script>
+// scale: 9 px per inch; beds are 96" x 24"
+const S = 9, W = 96, H = 24, F = 26, LBL = 36;
+const VW = W * S + 2 * F, VH = H * S + 2 * F + LBL;
+
+const C = {
+  kale:    '#2e6b34', chard: '#3f8f4a', bok: '#7bbf6a', garlic: '#d8c79a',
+  beet:    '#b03a5b', onion: '#6fae5c', leek: '#5e9ea0', parsley: '#3a7d3f',
+  dill:    '#9aa84f', lettuce:'#9ccc65', cilantro:'#66a05b', radish: '#d1607a',
+  spinach: '#2f7d46', tomato: '#c94f3d', pepper: '#d98e2b', basil: '#4f9e4f',
+  bean:    '#6a9e3f', cucumber:'#3f8f6b', carrot:'#e07b39'
+};
+
+// grid of plants: x0..x1 / y0..y1 in inches, sp spacing, r plant radius, ring = mature spread radius
+function grid(o) {
+  const pts = [];
+  for (let y = o.y0 + o.sp / 2; y < o.y1; y += o.sp)
+    for (let x = o.x0 + o.sp / 2; x < o.x1; x += o.sp)
+      pts.push([x, y]);
+  return pts.map(([x, y], i) => plant(x, y, o, i)).join('');
+}
+function scatter(o) {
+  let s = '';
+  for (let i = 0; i < o.n; i++) {
+    const x = o.x0 + ((i * 0.618 + 0.31) % 1) * (o.x1 - o.x0);
+    const y = o.y0 + ((i * 0.387 + 0.17) % 1) * (o.y1 - o.y0);
+    s += plant(x, y, o, i);
+  }
+  return s;
+}
+function plant(x, y, o, i) {
+  const cx = F + x * S, cy = F + y * S;
+  const faded = o.dim || (o.alt && i % 2 === 1);
+  let s = '';
+  if (o.ring) s += `<circle cx="${cx}" cy="${cy}" r="${o.ring * S}" fill="${o.fill}" opacity="0.16"/>`;
+  s += `<circle cx="${cx}" cy="${cy}" r="${o.r * S}" fill="${o.fill}" opacity="${faded ? 0.4 : 0.95}" stroke="rgba(0,0,0,0.25)" stroke-width="1"/>`;
+  return s;
+}
+function zoneMarks(zones) {
+  let s = '';
+  zones.forEach((z, i) => {
+    if (i > 0) s += `<line x1="${F + z.x0 * S}" y1="${F}" x2="${F + z.x0 * S}" y2="${F + H * S}" stroke="var(--ink)" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="6 5"/>`;
+    s += `<text x="${F + (z.x0 + z.x1) / 2 * S}" y="${F * 2 + H * S + 20}" text-anchor="middle" font-size="15" font-weight="600" fill="var(--muted)">${z.label}</text>`;
+  });
+  return s;
+}
+function bedSVG(zones, plants, notes) {
+  let s = `<svg viewBox="0 0 ${VW} ${VH}" xmlns="http://www.w3.org/2000/svg">`;
+  s += `<rect x="1" y="1" width="${VW - 2}" height="${H * S + 2 * F - 2}" rx="8" fill="var(--wood)" stroke="var(--wood2)" stroke-width="2"/>`;
+  s += `<rect x="${F}" y="${F}" width="${W * S}" height="${H * S}" fill="var(--soil)"/>`;
+  for (let ft = 1; ft < 8; ft++)
+    s += `<line x1="${F + ft * 12 * S}" y1="${F}" x2="${F + ft * 12 * S}" y2="${F + H * S}" stroke="var(--ink)" stroke-opacity="0.08" stroke-width="1"/>`;
+  for (let ft = 0; ft <= 8; ft++)
+    s += `<text x="${F + ft * 12 * S}" y="${F - 8}" text-anchor="middle" font-size="12" fill="var(--frame-ink)">${ft}'</text>`;
+  s += plants.map(p => p.kind === 'scatter' ? scatter(p) : grid(p)).join('');
+  s += zoneMarks(zones);
+  (notes || []).forEach(n => {
+    s += `<text x="${F + n.x * S}" y="${F + n.y * S}" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)" opacity="0.75">${n.t}</text>`;
+  });
+  s += `</svg>`;
+  return s;
+}
+
+// season layouts: 0 Now–Oct, 1 Nov–Feb, 2 Mar–Apr, 3 May–Jun, 4 Jul–Sep
+const fallBed1 = {
+  zones: [
+    { x0: 0,  x1: 36, label: 'Kale ×6 (12&quot; apart)' },
+    { x0: 36, x1: 60, label: 'Chard ×4' },
+    { x0: 60, x1: 96, label: 'Bok choy, 6&quot; grid (pale = pull young)' }
+  ],
+  plants: [
+    { x0: 0,  x1: 36, y0: 0, y1: 24, sp: 12, r: 4.5, ring: 7, fill: C.kale },
+    { x0: 36, x1: 60, y0: 0, y1: 24, sp: 12, r: 4,   ring: 6, fill: C.chard },
+    { x0: 60, x1: 96, y0: 0, y1: 24, sp: 6,  r: 2.2, ring: 3.2, fill: C.bok, alt: true }
+  ]
+};
+const fallBed2 = (bAlt, cAlt, garlicNote, garlicDim) => ({
+  zones: [
+    { x0: 0,  x1: 48, label: 'Garlic ×32 (6&quot; grid)' },
+    { x0: 48, x1: 72, label: 'Beets, 2 blocks (4&quot;)' },
+    { x0: 72, x1: 84, label: 'Carrots (3&quot;)' },
+    { x0: 84, x1: 96, label: 'Green onions' }
+  ],
+  plants: [
+    { x0: 0,  x1: 48, y0: 0, y1: 24, sp: 6, r: 1.4, ring: 2.6, fill: C.garlic, dim: garlicDim },
+    { x0: 48, x1: 60, y0: 0, y1: 24, sp: 4, r: 1.5, ring: 2, fill: C.beet },
+    { x0: 60, x1: 72, y0: 0, y1: 24, sp: 4, r: 1.5, ring: 2, fill: C.beet, alt: bAlt },
+    { x0: 72, x1: 84, y0: 0, y1: 24, sp: 3, r: 0.9, ring: 1.4, fill: C.carrot, alt: cAlt },
+    { x0: 84, x1: 96, y0: 0, y1: 24, sp: 2, r: 0.7, fill: C.onion }
+  ],
+  notes: [{ x: 24, y: 2.6, t: garlicNote }, { x: 54, y: 2.6, t: 'A' }, { x: 66, y: 2.6, t: 'B' }, { x: 78, y: 2.6, t: 'C' }]
+});
+const fallBed3 = (leeksAlt) => ({
+  zones: [
+    { x0: 0,  x1: 12, label: 'Leeks ×8' },
+    { x0: 12, x1: 48, label: 'Parsley ×6 (12&quot;)' },
+    { x0: 48, x1: 72, label: 'Lettuce ×16 (6&quot;)' },
+    { x0: 72, x1: 84, label: 'Carrots (3&quot;)' },
+    { x0: 84, x1: 90, label: 'Cilantro' },
+    { x0: 90, x1: 96, label: 'Dill' }
+  ],
+  plants: [
+    { x0: 0,  x1: 12, y0: 0, y1: 24, sp: 6, r: 1.6, ring: 3, fill: C.leek, alt: leeksAlt },
+    { x0: 12, x1: 48, y0: 0, y1: 24, sp: 12, r: 4, ring: 5.5, fill: C.parsley },
+    { x0: 48, x1: 72, y0: 0, y1: 24, sp: 6, r: 2.4, ring: 3.2, fill: C.lettuce },
+    { x0: 72, x1: 84, y0: 0, y1: 24, sp: 3, r: 0.9, ring: 1.4, fill: C.carrot },
+    { x0: 84, x1: 90, y0: 0, y1: 24, sp: 3, r: 0.8, fill: C.cilantro, alt: true },
+    { x0: 90, x1: 96, y0: 0, y1: 24, sp: 3, r: 0.8, fill: C.dill }
+  ],
+  notes: [{ x: 78, y: 2.6, t: '+3wk' }]
+});
+const summerBed1 = {
+  zones: [
+    { x0: 0,  x1: 36, label: 'Peppers ×6 (12&quot;)' },
+    { x0: 36, x1: 60, label: 'Basil ×4' },
+    { x0: 60, x1: 96, label: 'Cucumbers ×3 (trail over front)' }
+  ],
+  plants: [
+    { x0: 0,  x1: 36, y0: 0, y1: 24, sp: 12, r: 4, ring: 6, fill: C.pepper },
+    { x0: 36, x1: 60, y0: 0, y1: 24, sp: 12, r: 3.5, ring: 5, fill: C.basil },
+    { x0: 60, x1: 96, y0: 14, y1: 24, sp: 12, r: 3, ring: 5, fill: C.cucumber }
+  ]
+};
+const summerBed3 = (lettuce) => ({
+  zones: [
+    { x0: 0,  x1: 24, label: 'Peppers ×4 (12&quot;)' },
+    { x0: 24, x1: 48, label: 'Parsley (holds over)' },
+    { x0: 48, x1: 72, label: lettuce ? 'Lettuce (last rounds)' : 'Cucumbers, 2nd sowing' },
+    { x0: 72, x1: 96, label: 'Cucumbers ×2 (trail over front)' }
+  ],
+  plants: [
+    { x0: 0,  x1: 24, y0: 0, y1: 24, sp: 12, r: 4, ring: 6, fill: C.pepper },
+    { x0: 24, x1: 48, y0: 0, y1: 24, sp: 12, r: 4, ring: 5.5, fill: C.parsley },
+    lettuce
+      ? { x0: 48, x1: 72, y0: 0, y1: 24, sp: 6, r: 2.4, ring: 3.2, fill: C.lettuce, alt: true }
+      : { x0: 48, x1: 72, y0: 14, y1: 24, sp: 12, r: 3, ring: 5, fill: C.cucumber },
+    { x0: 72, x1: 96, y0: 14, y1: 24, sp: 12, r: 3, ring: 5, fill: C.cucumber }
+  ]
+});
+const seasons = [
+  {
+    desc: {
+      1: 'Transplant kale + chard starts; sow/plant first bok choy round. Pale = pull young.',
+      2: 'Sow beet block A, carrots and green onions now. Garlic (pale) waits for mid-October; beet block B by early Oct.',
+      3: 'Transplant 8 leeks + 6 parsley + first lettuce; sow carrot block D, dill, cilantro.'
+    },
+    beds: { 1: fallBed1, 2: fallBed2(true, true, 'plant mid-Oct', true), 3: fallBed3(false) }
+  },
+  {
+    desc: {
+      1: 'Harvest mode: outer kale/chard leaves weekly, rolling bok choy. Growth crawls Dec–Jan.',
+      2: 'Beets, carrots and garlic all in. Pull roots as needed; re-sow beets/carrots mid-Feb.',
+      3: 'Everything producing. Lettuce/cilantro successions slow Dec–Jan, restart mid-Feb.'
+    },
+    beds: { 1: fallBed1, 2: fallBed2(false, false, 'garlic growing'), 3: fallBed3(false) }
+  },
+  {
+    desc: {
+      1: 'Spring surge: kale/chard still producing, bok choy and lettuce rounds run fast.',
+      2: 'Garlic is bulbing — hands off. Keep beet, carrot and onion successions rolling.',
+      3: 'Leeks harvest out (pale = eaten). Dill takes off; lettuce/cilantro at full speed.'
+    },
+    beds: { 1: fallBed1, 2: fallBed2(false, false, 'bulbing — hands off'), 3: fallBed3(true) }
+  },
+  {
+    desc: {
+      1: 'Kale/chard bolt in May — pull them; plant 6 peppers, 4 basil, 3 cucumbers. Tomatoes go in big pots on the ground, not up here.',
+      2: 'Garlic holds its half until ~June harvest. Beet half becomes bush beans.',
+      3: 'Cilantro bolts, leeks done: plant 4 more peppers + 2 cucumbers. Lettuce hangs on in part shade.'
+    },
+    beds: {
+      1: summerBed1,
+      2: {
+        zones: [
+          { x0: 0, x1: 48, label: 'Garlic — harvest ~June' },
+          { x0: 48, x1: 84, label: 'Bush beans (6&quot;)' },
+          { x0: 84, x1: 96, label: 'Green onions' }
+        ],
+        plants: [
+          { x0: 0, x1: 48, y0: 0, y1: 24, sp: 6, r: 1.4, ring: 2.6, fill: C.garlic },
+          { x0: 48, x1: 84, y0: 0, y1: 24, sp: 6, r: 1.8, ring: 2.5, fill: C.bean },
+          { x0: 84, x1: 96, y0: 0, y1: 24, sp: 2, r: 0.7, fill: C.onion }
+        ],
+        notes: [{ x: 24, y: 2.6, t: 'out ~June' }]
+      },
+      3: summerBed3(true)
+    }
+  },
+  {
+    desc: {
+      1: 'Peppers, basil and cucumbers peak Jul–Sep (tomatoes peak in their ground pots). Pull late Sept, restart the fall plan.',
+      2: 'Garlic harvested + curing; its half takes a second bean sowing (pale). Fall plan restarts late Sept.',
+      3: 'Peppers and cucumbers peak; a 2nd cucumber sowing (mid-June) replaces the last lettuce. Fall plan restarts late Sept.'
+    },
+    beds: {
+      1: summerBed1,
+      2: {
+        zones: [
+          { x0: 0, x1: 84, label: 'Bush beans, two sowings' },
+          { x0: 84, x1: 96, label: 'Green onions' }
+        ],
+        plants: [
+          { x0: 0, x1: 48, y0: 0, y1: 24, sp: 6, r: 1.8, ring: 2.5, fill: C.bean, dim: true },
+          { x0: 48, x1: 84, y0: 0, y1: 24, sp: 6, r: 1.8, ring: 2.5, fill: C.bean },
+          { x0: 84, x1: 96, y0: 0, y1: 24, sp: 2, r: 0.7, fill: C.onion }
+        ],
+        notes: [{ x: 24, y: 2.6, t: '2nd sowing (pale)' }]
+      },
+      3: summerBed3(false)
+    }
+  }
+];
+
+const SEASON_NAMES = ['Now–Oct', 'Nov–Feb', 'Mar–Apr', 'May–Jun', 'Jul–Sep'];
+
+document.querySelectorAll('.bedviz').forEach(el => {
+  const bed = el.dataset.bed;
+  const ctl = document.createElement('div');
+  ctl.innerHTML =
+    `<input type="range" min="0" max="4" value="0" step="1" style="width:100%; accent-color: var(--accent);">
+     <div style="display:flex; justify-content:space-between; font-size:0.76rem; color:var(--muted); margin-top:1px;">
+       ${SEASON_NAMES.map(n => `<span>${n}</span>`).join('')}
+     </div>
+     <p class="season-desc" style="margin:8px 0 0; font-size:0.88rem; font-weight:600;"></p>`;
+  el.parentNode.insertBefore(ctl, el);
+  const slider = ctl.querySelector('input');
+  const desc = ctl.querySelector('.season-desc');
+  const draw = () => {
+    const s = seasons[+slider.value];
+    const b = s.beds[bed];
+    el.innerHTML = bedSVG(b.zones, b.plants, b.notes);
+    desc.textContent = SEASON_NAMES[+slider.value] + ' — ' + s.desc[bed];
+  };
+  slider.addEventListener('input', draw);
+  draw();
+});
+
+document.querySelectorAll('.tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('active', b === btn));
+    document.querySelectorAll('.tabpane').forEach(p => p.classList.toggle('active', p.id === 'tab-' + btn.dataset.tab));
+  });
+});
+</script>
+</body>
+</html>
