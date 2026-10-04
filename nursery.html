@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nursery List</title>
+<style>
+  :root {
+    --bg: #faf8f4; --card: #ffffff; --ink: #2d3320; --muted: #6b7059;
+    --accent: #4a7c2f; --accent-soft: #e8f0df; --border: #e0ddd2;
+    --warn-bg: #fdf3e0; --warn-border: #e8c98a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1f17; --card: #262a1f; --ink: #e6e8dc; --muted: #a3a891;
+      --accent: #8fc46a; --accent-soft: #2f3a24; --border: #3a3f30;
+      --warn-bg: #3a3020; --warn-border: #7a6232;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  main { max-width: 640px; margin: 0 auto; padding: 16px 16px 48px; }
+  h1 { font-size: 1.5rem; margin: 4px 0 2px; }
+  .sub { color: var(--muted); margin: 0 0 16px; font-size: .95rem; }
+  .sub a, a { color: var(--accent); }
+  h2 { font-size: 1.1rem; margin: 22px 0 8px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 4px 0; }
+  label { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-top: 1px solid var(--border); cursor: pointer; }
+  label:first-child { border-top: 0; }
+  input[type=checkbox] { width: 22px; height: 22px; margin: 1px 0 0; flex: none; accent-color: var(--accent); }
+  .qty { font-weight: 700; }
+  .tip { display: block; color: var(--muted); font-size: .9rem; }
+  input:checked + span { opacity: .45; text-decoration: line-through; }
+  .warn { background: var(--warn-bg); border: 1px solid var(--warn-border); border-radius: 12px; padding: 12px 14px; font-size: .95rem; }
+  .warn ul { margin: 6px 0 0; padding-left: 20px; }
+  button { margin-top: 20px; font: inherit; color: var(--muted); background: none; border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Nursery List</h1>
+  <p class="sub">Shopping Sun Oct 4 &middot; planting Tue Oct 6 &middot; <a href="./">full plan</a></p>
+
+  <div class="warn">
+    <strong>Picking good starts:</strong> stocky and deep green, no yellow lower leaves, roots not circling out the bottom. Bok choy and lettuce: pass on anything already stretching tall or forming a flower stalk — it'll bolt.
+  </div>
+
+  <h2>Starts (live plants)</h2>
+  <div class="card">
+    <label><input type="checkbox" data-k="kale"><span><span class="qty">6 kale</span> — mix curly + lacinato (dino)</span></label>
+    <label><input type="checkbox" data-k="chard"><span><span class="qty">4 Swiss chard</span></span></label>
+    <label><input type="checkbox" data-k="bokchoy"><span><span class="qty">8 bok choy</span> — compact, bolt-resistant (Mei Qing Choi / Toy Choy)</span></label>
+    <label><input type="checkbox" data-k="leeks"><span><span class="qty">8 leeks</span><span class="tip">Often sold as one 6-pack/bundle — grab enough for 8.</span></span></label>
+    <label><input type="checkbox" data-k="parsley"><span><span class="qty">6 parsley</span> — flat-leaf (Italian)</span></label>
+    <label><input type="checkbox" data-k="lettuce"><span><span class="qty">5–6 Little Gem lettuce</span><span class="tip">Any mini romaine/butterhead if no Little Gem.</span></span></label>
+    <label><input type="checkbox" data-k="alyssum"><span><span class="qty">3–4 sweet alyssum</span> — for bed corners (draws aphid-eating bugs)</span></label>
+  </div>
+
+  <h2>Seed packets (1 each)</h2>
+  <div class="card">
+    <label><input type="checkbox" data-k="s-lettuce"><span>Little Gem lettuce (or mini romaine)</span></label>
+    <label><input type="checkbox" data-k="s-beets"><span>Beets — Detroit Dark Red or a mix</span></label>
+    <label><input type="checkbox" data-k="s-carrots"><span>Carrots — Nantes type</span></label>
+    <label><input type="checkbox" data-k="s-onions"><span>Green / bunching onions<span class="tip">Big packet — they go on every bed edge.</span></span></label>
+    <label><input type="checkbox" data-k="s-bokchoy"><span>Bok choy</span></label>
+    <label><input type="checkbox" data-k="s-cilantro"><span>Cilantro — slow-bolt type</span></label>
+    <label><input type="checkbox" data-k="s-dill"><span>Dill</span></label>
+    <label><input type="checkbox" data-k="s-radish"><span>Radish</span></label>
+    <label><input type="checkbox" data-k="s-spinach"><span>Spinach</span></label>
+  </div>
+
+  <h2>Also grab, if not already bought</h2>
+  <div class="card">
+    <label><input type="checkbox" data-k="garlic"><span><span class="qty">4 seed-garlic bulbs</span> — 2 Early Italian Purple + 2 California Late<span class="tip">Plants Oct 14. Any softneck seed garlic works; never grocery garlic.</span></span></label>
+    <label><input type="checkbox" data-k="fert"><span><span class="qty">1 bag organic vegetable fertilizer</span> (~4-4-4)<span class="tip">Skip only if the Diamond K mix had fertilizer added.</span></span></label>
+    <label><input type="checkbox" data-k="netting"><span>Insect netting or floating row cover (Agribon AG-19)<span class="tip">For Bed 1, if the Amazon order isn't coming. Plus 1/2" PVC or hoops + clamps.</span></span></label>
+    <label><input type="checkbox" data-k="sluggo"><span>Sluggo</span></label>
+    <label><input type="checkbox" data-k="bt"><span>Bt spray (Monterey or similar)</span></label>
+  </div>
+
+  <h2>Don't buy today</h2>
+  <div class="warn">
+    <ul>
+      <li><strong>Snap peas</strong> — fall window closed; sow mid-February.</li>
+      <li><strong>Bush beans, summer starts</strong> — spring.</li>
+    </ul>
+  </div>
+
+  <p class="sub" style="margin-top:20px">Until Tuesday: keep starts in light shade and water them daily — 4" pots dry out fast.</p>
+  <button type="button" id="reset">Clear checkmarks</button>
+</main>
+<script>
+const boxes = document.querySelectorAll('input[data-k]');
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem('nursery-oct4') || '{}'); } catch (e) {}
+const save = () => { try { localStorage.setItem('nursery-oct4', JSON.stringify(saved)); } catch (e) {} };
+boxes.forEach(b => {
+  b.checked = !!saved[b.dataset.k];
+  b.addEventListener('change', () => { saved[b.dataset.k] = b.checked; save(); });
+});
+document.getElementById('reset').addEventListener('click', () => { saved = {}; save(); boxes.forEach(b => b.checked = false); });
+</script>
+</body>
+</html>
